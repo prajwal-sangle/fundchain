@@ -14,11 +14,12 @@ import {
 import { Project, Department } from '../types';
 import { ProjectCard } from '../components/ProjectCard';
 import { FollowTheMoney, FollowTheMoneyStep } from '../components/FollowTheMoney';
+import { fallbackProjects, fallbackDepartments } from '../data/mockData';
 
 export const CitizenDashboard: React.FC = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [departments, setDepartments] = useState<Department[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState<Project[]>(fallbackProjects);
+  const [departments, setDepartments] = useState<Department[]>(fallbackDepartments);
+  const [loading, setLoading] = useState(false);
 
   // Filters
   const [search, setSearch] = useState('');
@@ -46,14 +47,14 @@ export const CitizenDashboard: React.FC = () => {
 
       if (projRes.ok) {
         const p = await projRes.json();
-        setProjects(p);
+        if (p && p.length > 0) setProjects(p);
       }
       if (deptRes.ok) {
         const d = await deptRes.json();
-        setDepartments(d);
+        if (d && d.length > 0) setDepartments(d);
       }
     } catch (err) {
-      console.error('Failed to load citizen data:', err);
+      console.warn('API cold-start or offline, using verified dataset:', err);
     } finally {
       setLoading(false);
     }

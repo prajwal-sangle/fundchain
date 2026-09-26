@@ -30,13 +30,17 @@ interface Props {
   selectedProject?: Project;
   onSelectProject?: (project: Project) => void;
   steps?: FollowTheMoneyStep[];
+  projectTitle?: string;
+  projectCode?: string;
 }
 
 export const FollowTheMoney: React.FC<Props> = ({ 
   projects = [],
   selectedProject,
   onSelectProject,
-  steps
+  steps,
+  projectTitle,
+  projectCode
 }) => {
   // Default mock fallback projects if none loaded
   const activeProj = selectedProject || (projects.length > 0 ? projects[0] : null);

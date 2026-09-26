@@ -181,6 +181,8 @@ export interface User {
   email: string;
   name: string;
   role: 'GOVERNMENT' | 'DEPARTMENT' | 'CONTRACTOR' | 'AUDITOR' | 'CITIZEN';
+  departmentId?: string | null;
+  contractorId?: string | null;
   department?: Department | null;
   contractor?: Contractor | null;
 }
